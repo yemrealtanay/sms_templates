@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/yemrealtanay/sms_templates/controllers"
 	"github.com/yemrealtanay/sms_templates/initializers"
 )
 
@@ -12,11 +13,7 @@ func init() {
 
 func main() {
 	r := gin.Default()
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	r.POST("/sms_template", controllers.SmsTemplateCreate)
 
 	r.Run()
 }
