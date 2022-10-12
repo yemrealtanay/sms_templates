@@ -1,7 +1,16 @@
+postgres:
+	//your code
+
 createdb:
-	//your command
+	//your code
 
 dropdb:
-	//your command
+	//your code
 
-.PHONY: createdb
+migrateup:
+	//your code
+
+migratedown:
+	//your code
+
+.PHONY: postgres createdb dropdb migrateup migratedown
