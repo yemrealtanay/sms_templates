@@ -2,8 +2,8 @@ package models
 
 import "time"
 
-type TestSmsTemplate struct {
-	Test_sms_template_id     uint `gorm:"primaryKey"`
+type SmsTemplate struct {
+	Sms_template_id          uint `gorm:"primaryKey"`
 	Company_id               int
 	Branch_id                int
 	Name                     string
