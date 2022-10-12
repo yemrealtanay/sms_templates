@@ -1,0 +1,7 @@
+createdb:
+	//your command
+
+dropdb:
+	//your command
+
+.PHONY: createdb
