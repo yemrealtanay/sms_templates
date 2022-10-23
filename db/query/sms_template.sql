@@ -33,8 +33,8 @@ SELECT * FROM sms_templates
 WHERE sms_template_type_id = $1 and company_id $2;
 
 -- name: UpdateSmsTemplate :exec
-UPDATE sms_templates SET name= $1, subject= $2, content= $3, is_edited= $4
-WHERE sms_template_id = $5;
+UPDATE sms_templates SET name= $1, subject= $2, content= $3, is_edited= $4, sms_template_type_id= $5, sms_template_category_id= $6, activity_id= $7
+WHERE sms_template_id = $8;
 
 -- name: DeleteSmsTemplate :exec
 DELETE FROM sms_templates WHERE sms_template_id = $1;

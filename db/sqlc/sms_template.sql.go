@@ -258,25 +258,31 @@ func (q *Queries) GetSmsTemplates(ctx context.Context, companyID sql.NullInt32) 
 }
 
 const updateSmsTemplate = `-- name: UpdateSmsTemplate :exec
-UPDATE sms_templates SET name= $1, subject= $2, content= $3, is_edited= $4
-WHERE sms_template_id = $5
+UPDATE sms_templates SET name= $1, subject= $2, content= $3, is_edited= $4, sms_template_type_id= $5, sms_template_category_id= $6, activity_id= $7
+WHERE sms_template_id = $8
 `
 
 type UpdateSmsTemplateParams struct {
-	Name          sql.NullString `json:"name"`
-	Subject       sql.NullString `json:"subject"`
-	Content       sql.NullString `json:"content"`
-	IsEdited      sql.NullBool   `json:"is_edited"`
-	SmsTemplateID int32          `json:"sms_template_id"`
+	Name                  sql.NullString `json:"name"`
+	Subject               sql.NullString `json:"subject"`
+	Content               sql.NullString `json:"content"`
+	IsEdited              sql.NullBool   `json:"is_edited"`
+	SmsTemplateTypeID     sql.NullInt32  `json:"sms_template_type_id"`
+	SmsTemplateCategoryID sql.NullInt32  `json:"sms_template_category_id"`
+	ActivityID            sql.NullInt32  `json:"activity_id"`
+	SmsTemplateID         int32          `json:"sms_template_id"`
 }
 
-func (q *Queries) UpdateSmsTemplate(ctx context.Context, arg UpdateSmsTemplateParams) error {
+func (q *Queries) UpdateSmsTemplate(ctx context.Context, arg UpdateSmsTemplateParams) (int32, error) {
 	_, err := q.db.ExecContext(ctx, updateSmsTemplate,
 		arg.Name,
 		arg.Subject,
 		arg.Content,
 		arg.IsEdited,
+		arg.SmsTemplateTypeID,
+		arg.SmsTemplateCategoryID,
+		arg.ActivityID,
 		arg.SmsTemplateID,
 	)
-	return err
+	return 0, err
 }
