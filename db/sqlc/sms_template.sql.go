@@ -258,8 +258,8 @@ func (q *Queries) GetSmsTemplates(ctx context.Context, companyID sql.NullInt32) 
 }
 
 const updateSmsTemplate = `-- name: UpdateSmsTemplate :exec
-UPDATE sms_templates SET name= $1, subject= $2, content= $3, is_edited= $4, sms_template_type_id= $5, sms_template_category_id= $6, activity_id= $7
-WHERE sms_template_id = $8
+UPDATE sms_templates SET name= $1, subject= $2, content= $3, is_edited= $4, sms_template_type_id= $5, sms_template_category_id= $6, activity_id= $7, subscription_type_id= $8
+WHERE sms_template_id = $9
 `
 
 type UpdateSmsTemplateParams struct {
@@ -270,6 +270,7 @@ type UpdateSmsTemplateParams struct {
 	SmsTemplateTypeID     sql.NullInt32  `json:"sms_template_type_id"`
 	SmsTemplateCategoryID sql.NullInt32  `json:"sms_template_category_id"`
 	ActivityID            sql.NullInt32  `json:"activity_id"`
+	SubscriptionTypeID    sql.NullInt32  `json:"subscription_type_id"`
 	SmsTemplateID         int32          `json:"sms_template_id"`
 }
 
@@ -282,6 +283,7 @@ func (q *Queries) UpdateSmsTemplate(ctx context.Context, arg UpdateSmsTemplatePa
 		arg.SmsTemplateTypeID,
 		arg.SmsTemplateCategoryID,
 		arg.ActivityID,
+		arg.SubscriptionTypeID,
 		arg.SmsTemplateID,
 	)
 	return 0, err

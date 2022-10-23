@@ -13,16 +13,16 @@ type Store interface {
 }
 
 type SQLStore struct {
-	*Queries
 	db *sql.DB
+	*Queries
 }
 
-func NewStore(db *sql.DB) Store {
-	return &SQLStore{
-		db:      db,
-		Queries: New(db),
-	}
-}
+//func NewStore(db *sql.DB) Store {
+//	return &SQLStore{
+//		db:      db,
+//		Queries: New(db),
+//	}
+//}
 
 func (store *SQLStore) execTx(ctx context.Context, fn func(*Queries) error) error {
 	tx, err := store.db.BeginTx(ctx, nil)
@@ -49,6 +49,11 @@ type UpdateSmsTemplateTxResult struct {
 	SmsTemplateCategoryID sql.NullInt32 `json:"sms_template_category_id"`
 	ActivityID            sql.NullInt32 `json:"activity_id"`
 	IsEdited              bool          `json:"is_edited"`
+	SubscriptionTypeID    sql.NullInt32 `json:"subscription_type_id"`
+}
+
+type CreateSmsTemplateTxResult struct {
+	SmsTemplate SmsTemplate `json:"sms_template"`
 }
 
 func (store *SQLStore) UpdateSmsTemplateTx(ctx context.Context, arg UpdateSmsTemplateParams) (UpdateSmsTemplateTxResult, error) {
@@ -67,12 +72,32 @@ func (store *SQLStore) UpdateSmsTemplateTx(ctx context.Context, arg UpdateSmsTem
 			ActivityID:            arg.ActivityID,
 			IsEdited:              arg.IsEdited,
 		})
-		if err != nil {
-			return err
-		}
-
 		return err
 	})
 
+	return result, err
+}
+
+func (store *SQLStore) CreateSmsTemplateTx(ctx context.Context, arg CreateSmsTemplateParams) (CreateSmsTemplateTxResult, error) {
+	var result CreateSmsTemplateTxResult
+
+	err := store.execTx(ctx, func(q *Queries) error {
+		var err error
+
+		result.SmsTemplate, err = q.CreateSmsTemplate(ctx, CreateSmsTemplateParams{
+			CompanyID:             arg.CompanyID,
+			BranchID:              arg.BranchID,
+			Name:                  arg.Name,
+			Subject:               arg.Subject,
+			Content:               arg.Content,
+			SubscriptionTypeID:    arg.SubscriptionTypeID,
+			SmsTemplateTypeID:     arg.SmsTemplateTypeID,
+			CreatedBy:             arg.CreatedBy,
+			SmsTemplateCategoryID: arg.SmsTemplateCategoryID,
+			ActivityID:            arg.ActivityID,
+			IsEdited:              arg.IsEdited,
+		})
+		return err
+	})
 	return result, err
 }
