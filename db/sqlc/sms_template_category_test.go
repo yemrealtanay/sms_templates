@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func CreateRandomCategory(t *testing.T) models.SmsTemplateCategory {
+func createRandomCategory(t *testing.T) models.SmsTemplateCategory {
 
 	arg := CreateSmsTemplateCategoryParams{
 		CompanyID:   util.RandomInt(1, 500),
@@ -28,4 +28,8 @@ func CreateRandomCategory(t *testing.T) models.SmsTemplateCategory {
 
 	return smsTemplateCategory
 
+}
+
+func TestCreateSmsTemplateCategory(t *testing.T) {
+	createRandomCategory(t)
 }

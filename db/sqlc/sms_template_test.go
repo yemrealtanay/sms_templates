@@ -2,10 +2,12 @@ package db
 
 import (
 	"context"
+	"database/sql"
 	"github.com/stretchr/testify/require"
 	"github.com/yemrealtanay/sms_templates/db/models"
 	"github.com/yemrealtanay/sms_templates/util"
 	"testing"
+	"time"
 )
 
 func createRandomSmsTemplate(t *testing.T) models.SmsTemplate {
@@ -43,4 +45,66 @@ func createRandomSmsTemplate(t *testing.T) models.SmsTemplate {
 
 func TestCreateSmsTemplate(t *testing.T) {
 	createRandomSmsTemplate(t)
+}
+
+func TestGetSmsTemplate(t *testing.T) {
+	smsTemplate1 := createRandomSmsTemplate(t)
+	smsTemplate2, err := testQueries.GetSmsTemplateByID(context.Background(), smsTemplate1.SmsTemplateID)
+	require.NoError(t, err)
+	require.NotEmpty(t, smsTemplate2)
+
+	require.Equal(t, smsTemplate1.Name, smsTemplate2.Name)
+	require.Equal(t, smsTemplate1.CreatedBy, smsTemplate2.CreatedBy)
+	require.Equal(t, smsTemplate1.SubscriptionTypeID, smsTemplate2.SmsTemplateTypeID)
+	require.WithinDuration(t, smsTemplate1.CreatedAt, smsTemplate2.CreatedAt, time.Second)
+}
+
+func TestUpdateSmsTemplate(t *testing.T) {
+	oldSmsTemplate := createRandomSmsTemplate(t)
+
+	newName := util.RandomName()
+	newSubject := util.RandomSubject()
+	newContent := util.RandomSentence()
+	newSmsTemplateTypeId := util.RandomInt(1, 100)
+	newSmsTemplateCategoryId := util.RandomInt(1, 50)
+	newActivityID := util.RandomInt(1, 500)
+	newSubscriptionTypeId := util.RandomInt(1, 100)
+
+	_, err := testQueries.UpdateSmsTemplate(context.Background(), UpdateSmsTemplateParams{
+		Name: sql.NullString{
+			String: newName,
+			Valid:  true,
+		},
+		Subject: sql.NullString{
+			String: newSubject,
+			Valid:  true,
+		},
+		Content: sql.NullString{
+			String: newContent,
+			Valid:  true,
+		},
+		IsEdited: sql.NullBool{
+			Bool:  true,
+			Valid: true,
+		},
+		SmsTemplateTypeID: sql.NullInt32{
+			Int32: newSmsTemplateTypeId,
+			Valid: true,
+		},
+		SmsTemplateCategoryID: sql.NullInt32{
+			Int32: newSmsTemplateCategoryId,
+			Valid: true,
+		},
+		ActivityID: sql.NullInt32{
+			Int32: newActivityID,
+			Valid: true,
+		},
+		SubscriptionTypeID: sql.NullInt32{
+			Int32: newSubscriptionTypeId,
+			Valid: true,
+		},
+		SmsTemplateID: oldSmsTemplate.SmsTemplateID,
+	})
+
+	require.NoError(t, err)
 }

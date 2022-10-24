@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func CreateRandomType(t *testing.T) models.SmsTemplateType {
+func createRandomType(t *testing.T) models.SmsTemplateType {
 	arg := CreateSmsTemplateTypeParams{
 		Name:        util.RandomName(),
 		Description: util.RandomSentence(),
@@ -22,4 +22,8 @@ func CreateRandomType(t *testing.T) models.SmsTemplateType {
 	require.Equal(t, arg.Key, smsTemplateType.Key)
 
 	return smsTemplateType
+}
+
+func TestCreateSmsTemplateType(t *testing.T) {
+	createRandomType(t)
 }
