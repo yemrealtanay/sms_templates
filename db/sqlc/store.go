@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/yemrealtanay/sms_templates/db/models"
 )
 
 type Store interface {
@@ -53,7 +54,7 @@ type UpdateSmsTemplateTxResult struct {
 }
 
 type CreateSmsTemplateTxResult struct {
-	SmsTemplate SmsTemplate `json:"sms_template"`
+	SmsTemplate models.SmsTemplate `json:"sms_template"`
 }
 
 func (store *SQLStore) UpdateSmsTemplateTx(ctx context.Context, arg UpdateSmsTemplateParams) (UpdateSmsTemplateTxResult, error) {

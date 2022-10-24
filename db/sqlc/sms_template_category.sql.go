@@ -8,6 +8,7 @@ package db
 import (
 	"context"
 	"database/sql"
+	"github.com/yemrealtanay/sms_templates/db/models"
 )
 
 const createSmsTemplateCategory = `-- name: CreateSmsTemplateCategory :one
@@ -28,7 +29,7 @@ type CreateSmsTemplateCategoryParams struct {
 	CreatedBy   sql.NullInt32  `json:"created_by"`
 }
 
-func (q *Queries) CreateSmsTemplateCategory(ctx context.Context, arg CreateSmsTemplateCategoryParams) (SmsTemplateCategory, error) {
+func (q *Queries) CreateSmsTemplateCategory(ctx context.Context, arg CreateSmsTemplateCategoryParams) (models.SmsTemplateCategory, error) {
 	row := q.db.QueryRowContext(ctx, createSmsTemplateCategory,
 		arg.CompanyID,
 		arg.BranchID,
@@ -36,7 +37,7 @@ func (q *Queries) CreateSmsTemplateCategory(ctx context.Context, arg CreateSmsTe
 		arg.Description,
 		arg.CreatedBy,
 	)
-	var i SmsTemplateCategory
+	var i models.SmsTemplateCategory
 	err := row.Scan(
 		&i.SmsTemplateCategoryID,
 		&i.CompanyID,

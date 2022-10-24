@@ -8,6 +8,7 @@ package db
 import (
 	"context"
 	"database/sql"
+	"github.com/yemrealtanay/sms_templates/db/models"
 )
 
 const createSmsTemplateType = `-- name: CreateSmsTemplateType :one
@@ -24,9 +25,9 @@ type CreateSmsTemplateTypeParams struct {
 	Key         sql.NullString `json:"key"`
 }
 
-func (q *Queries) CreateSmsTemplateType(ctx context.Context, arg CreateSmsTemplateTypeParams) (SmsTemplateType, error) {
+func (q *Queries) CreateSmsTemplateType(ctx context.Context, arg CreateSmsTemplateTypeParams) (models.SmsTemplateType, error) {
 	row := q.db.QueryRowContext(ctx, createSmsTemplateType, arg.Name, arg.Description, arg.Key)
-	var i SmsTemplateType
+	var i models.SmsTemplateType
 	err := row.Scan(
 		&i.SmsTemplateTypeID,
 		&i.Name,
