@@ -2,6 +2,7 @@ package db
 
 import (
 	"database/sql"
+	"github.com/yemrealtanay/sms_templates/util"
 	"log"
 	"os"
 	"testing"
@@ -9,17 +10,12 @@ import (
 	_ "github.com/lib/pq"
 )
 
-const (
-	dbDriver = "postgres"
-	dbSource = "postgresql://yemretest:123456789@0.0.0.0:5432/sms_templates?sslmode=disable"
-)
-
 var testQueries *Queries
 var testDB *sql.DB
 
 func TestMain(m *testing.M) {
-	var err error
-	testDB, err := sql.Open(dbDriver, dbSource)
+	config, err := util.LoadConfig("../..")
+	testDB, err = sql.Open(config.DBDriver, config.DBSource)
 	if err != nil {
 		log.Fatal("cannot connect to database:", err)
 	}
