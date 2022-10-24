@@ -18,12 +18,12 @@ type SQLStore struct {
 	*Queries
 }
 
-//func NewStore(db *sql.DB) Store {
-//	return &SQLStore{
-//		db:      db,
-//		Queries: New(db),
-//	}
-//}
+func NewStore(db *sql.DB) *SQLStore {
+	return &SQLStore{
+		db:      db,
+		Queries: New(db),
+	}
+}
 
 func (store *SQLStore) execTx(ctx context.Context, fn func(*Queries) error) error {
 	tx, err := store.db.BeginTx(ctx, nil)
