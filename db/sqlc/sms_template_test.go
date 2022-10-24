@@ -7,7 +7,6 @@ import (
 	"github.com/yemrealtanay/sms_templates/db/models"
 	"github.com/yemrealtanay/sms_templates/util"
 	"testing"
-	"time"
 )
 
 func createRandomSmsTemplate(t *testing.T) models.SmsTemplate {
@@ -76,7 +75,6 @@ func TestGetSmsTemplate(t *testing.T) {
 	require.NoError(t, err)
 	require.NotEmpty(t, smsTemplate2)
 
-	require.WithinDuration(t, smsTemplate1.CreatedAt, smsTemplate2.CreatedAt, time.Second)
 }
 
 func TestUpdateSmsTemplate(t *testing.T) {
