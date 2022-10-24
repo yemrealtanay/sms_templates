@@ -63,15 +63,16 @@ func (store *SQLStore) UpdateSmsTemplateTx(ctx context.Context, arg UpdateSmsTem
 	err := store.execTx(ctx, func(q *Queries) error {
 		var err error
 
-		result.SmsTemplateID, err = q.UpdateSmsTemplate(ctx, UpdateSmsTemplateParams{
-			SmsTemplateID:         arg.SmsTemplateID,
+		err, _ = q.UpdateSmsTemplate(ctx, UpdateSmsTemplateParams{
 			Name:                  arg.Name,
 			Subject:               arg.Subject,
 			Content:               arg.Content,
+			IsEdited:              arg.IsEdited,
 			SmsTemplateTypeID:     arg.SmsTemplateTypeID,
 			SmsTemplateCategoryID: arg.SmsTemplateCategoryID,
 			ActivityID:            arg.ActivityID,
-			IsEdited:              arg.IsEdited,
+			SubscriptionTypeID:    arg.SubscriptionTypeID,
+			SmsTemplateID:         arg.SmsTemplateID,
 		})
 		return err
 	})

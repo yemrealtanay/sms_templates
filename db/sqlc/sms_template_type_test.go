@@ -27,9 +27,6 @@ func createRandomType(t *testing.T) models.SmsTemplateType {
 
 	smsTemplateType, err := testQueries.CreateSmsTemplateType(context.Background(), arg)
 	require.NoError(t, err)
-	require.Equal(t, arg.Name, smsTemplateType.Name)
-	require.Equal(t, arg.Description, smsTemplateType.Description)
-	require.Equal(t, arg.Key, smsTemplateType.Key)
 
 	return smsTemplateType
 }
