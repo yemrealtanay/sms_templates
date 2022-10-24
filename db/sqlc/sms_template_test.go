@@ -11,18 +11,53 @@ import (
 )
 
 func createRandomSmsTemplate(t *testing.T) models.SmsTemplate {
+	category := createRandomCategory(t)
+	templateType := createRandomType(t)
 	arg := CreateSmsTemplateParams{
-		CompanyID:             util.RandomInt(1, 500),
-		BranchID:              util.RandomInt(1, 500),
-		Name:                  util.RandomName(),
-		Subject:               util.RandomSubject(),
-		Content:               util.RandomSentence(),
-		SubscriptionTypeID:    util.RandomInt(1, 100),
-		SmsTemplateCategoryID: util.RandomInt(1, 50),
-		CreatedBy:             util.RandomUserID(),
-		SmsTemplateTypeID:     util.RandomInt(1, 100),
-		ActivityID:            util.RandomInt(1, 100),
-		IsEdited:              util.RandomBool(),
+		CompanyID: sql.NullInt32{
+			Int32: util.RandomInt(1, 500),
+			Valid: true,
+		},
+		BranchID: sql.NullInt32{
+			Int32: util.RandomInt(1, 500),
+			Valid: true,
+		},
+		Name: sql.NullString{
+			String: util.RandomName(),
+			Valid:  true,
+		},
+		Subject: sql.NullString{
+			String: util.RandomSubject(),
+			Valid:  true,
+		},
+		Content: sql.NullString{
+			String: util.RandomSentence(),
+			Valid:  true,
+		},
+		SubscriptionTypeID: sql.NullInt32{
+			Int32: util.RandomInt(1, 100),
+			Valid: true,
+		},
+		SmsTemplateCategoryID: sql.NullInt32{
+			Int32: category.SmsTemplateCategoryID,
+			Valid: true,
+		},
+		CreatedBy: sql.NullInt32{
+			Int32: util.RandomUserID(),
+			Valid: true,
+		},
+		SmsTemplateTypeID: sql.NullInt32{
+			Int32: templateType.SmsTemplateTypeID,
+			Valid: true,
+		},
+		ActivityID: sql.NullInt32{
+			Int32: util.RandomInt(1, 100),
+			Valid: true,
+		},
+		IsEdited: sql.NullBool{
+			Bool:  util.RandomBool(),
+			Valid: true,
+		},
 	}
 
 	smsTemplate, err := testQueries.CreateSmsTemplate(context.Background(), arg)

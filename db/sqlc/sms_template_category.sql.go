@@ -22,11 +22,11 @@ RETURNING sms_template_category_id, company_id, branch_id, name, description, cr
 `
 
 type CreateSmsTemplateCategoryParams struct {
-	CompanyID   int32  `json:"company_id"`
-	BranchID    int32  `json:"branch_id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	CreatedBy   int32  `json:"created_by"`
+	CompanyID   sql.NullInt32  `json:"company_id"`
+	BranchID    sql.NullInt32  `json:"branch_id"`
+	Name        sql.NullString `json:"name"`
+	Description sql.NullString `json:"description"`
+	CreatedBy   sql.NullInt32  `json:"created_by"`
 }
 
 func (q *Queries) CreateSmsTemplateCategory(ctx context.Context, arg CreateSmsTemplateCategoryParams) (models.SmsTemplateCategory, error) {

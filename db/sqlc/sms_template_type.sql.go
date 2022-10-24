@@ -20,9 +20,9 @@ RETURNING sms_template_type_id, name, description, key, created_at, updated_at, 
 `
 
 type CreateSmsTemplateTypeParams struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Key         string `json:"key"`
+	Name        sql.NullString `json:"name"`
+	Description sql.NullString `json:"description"`
+	Key         sql.NullString `json:"key"`
 }
 
 func (q *Queries) CreateSmsTemplateType(ctx context.Context, arg CreateSmsTemplateTypeParams) (models.SmsTemplateType, error) {

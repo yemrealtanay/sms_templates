@@ -50,7 +50,4 @@ CREATE INDEX ON "sms_template_types" ("key");
 CREATE INDEX ON "sms_template_categories" ("company_id");
 
 ALTER TABLE "sms_templates"
-    ADD FOREIGN KEY ("subscription_type_id") REFERENCES "sms_template_types" ("sms_template_type_id");
-
-ALTER TABLE "sms_templates"
     ADD FOREIGN KEY ("sms_template_category_id") REFERENCES "sms_template_categories" ("sms_template_category_id");

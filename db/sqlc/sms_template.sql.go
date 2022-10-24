@@ -30,17 +30,17 @@ INSERT INTO sms_templates (
 `
 
 type CreateSmsTemplateParams struct {
-	CompanyID             int32  `json:"company_id"`
-	BranchID              int32  `json:"branch_id"`
-	Name                  string `json:"name"`
-	Subject               string  `json:"subject"`
-	Content               string  `json:"content"`
-	SubscriptionTypeID    int32  `json:"subscription_type_id"`
-	SmsTemplateCategoryID int32  `json:"sms_template_category_id"`
-	CreatedBy             int32  `json:"created_by"`
-	SmsTemplateTypeID     int32  `json:"sms_template_type_id"`
-	ActivityID            int32  `json:"activity_id"`
-	IsEdited              bool   `json:"is_edited"`
+	CompanyID             sql.NullInt32  `json:"company_id"`
+	BranchID              sql.NullInt32  `json:"branch_id"`
+	Name                  sql.NullString `json:"name"`
+	Subject               sql.NullString `json:"subject"`
+	Content               sql.NullString `json:"content"`
+	SubscriptionTypeID    sql.NullInt32  `json:"subscription_type_id"`
+	SmsTemplateCategoryID sql.NullInt32  `json:"sms_template_category_id"`
+	CreatedBy             sql.NullInt32  `json:"created_by"`
+	SmsTemplateTypeID     sql.NullInt32  `json:"sms_template_type_id"`
+	ActivityID            sql.NullInt32  `json:"activity_id"`
+	IsEdited              sql.NullBool   `json:"is_edited"`
 }
 
 func (q *Queries) CreateSmsTemplate(ctx context.Context, arg CreateSmsTemplateParams) (models.SmsTemplate, error) {
@@ -423,7 +423,7 @@ type UpdateSmsTemplateParams struct {
 	SmsTemplateID         int32          `json:"sms_template_id"`
 }
 
-func (q *Queries) UpdateSmsTemplate(ctx context.Context, arg UpdateSmsTemplateParams) (int32, error) {
+func (q *Queries) UpdateSmsTemplate(ctx context.Context, arg UpdateSmsTemplateParams) (error, error) {
 	_, err := q.db.ExecContext(ctx, updateSmsTemplate,
 		arg.Name,
 		arg.Subject,
@@ -435,5 +435,5 @@ func (q *Queries) UpdateSmsTemplate(ctx context.Context, arg UpdateSmsTemplatePa
 		arg.SubscriptionTypeID,
 		arg.SmsTemplateID,
 	)
-	return 0, err
+	return err, nil
 }
