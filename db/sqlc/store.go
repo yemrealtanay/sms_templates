@@ -42,15 +42,15 @@ func (store *SQLStore) execTx(ctx context.Context, fn func(*Queries) error) erro
 }
 
 type UpdateSmsTemplateTxResult struct {
-	SmsTemplateID         int32         `json:"sms_template_id"`
-	Name                  string        `json:"name"`
-	Subject               string        `json:"subject"`
-	Content               string        `json:"content"`
-	SmsTemplateTypeID     sql.NullInt32 `json:"sms_template_type_id"`
-	SmsTemplateCategoryID sql.NullInt32 `json:"sms_template_category_id"`
-	ActivityID            sql.NullInt32 `json:"activity_id"`
-	IsEdited              bool          `json:"is_edited"`
-	SubscriptionTypeID    sql.NullInt32 `json:"subscription_type_id"`
+	SmsTemplateID         int32          `json:"sms_template_id"`
+	Name                  sql.NullString `json:"name"`
+	Subject               sql.NullString `json:"subject"`
+	Content               sql.NullString `json:"content"`
+	SmsTemplateTypeID     sql.NullInt32  `json:"sms_template_type_id"`
+	SmsTemplateCategoryID sql.NullInt32  `json:"sms_template_category_id"`
+	ActivityID            sql.NullInt32  `json:"activity_id"`
+	IsEdited              sql.NullBool   `json:"is_edited"`
+	SubscriptionTypeID    sql.NullInt32  `json:"subscription_type_id"`
 }
 
 type CreateSmsTemplateTxResult struct {

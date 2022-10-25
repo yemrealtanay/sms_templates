@@ -4,8 +4,6 @@
 *.dll
 *.so
 *.dylib
-*.env
-*.yaml
 /sms_templates
 # Test binary, built with `go test -c`
 *.test
