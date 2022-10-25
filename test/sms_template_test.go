@@ -1,10 +1,11 @@
-package db
+package test
 
 import (
 	"context"
 	"database/sql"
 	"github.com/stretchr/testify/require"
 	"github.com/yemrealtanay/sms_templates/db/models"
+	"github.com/yemrealtanay/sms_templates/db/sqlc"
 	"github.com/yemrealtanay/sms_templates/util"
 	"testing"
 )
@@ -12,7 +13,7 @@ import (
 func createRandomSmsTemplate(t *testing.T) models.SmsTemplate {
 	category := createRandomCategory(t)
 	templateType := createRandomType(t)
-	arg := CreateSmsTemplateParams{
+	arg := db.CreateSmsTemplateParams{
 		CompanyID: sql.NullInt32{
 			Int32: util.RandomInt(1, 500),
 			Valid: true,
@@ -88,7 +89,7 @@ func TestUpdateSmsTemplate(t *testing.T) {
 	newActivityID := util.RandomInt(1, 500)
 	newSubscriptionTypeId := util.RandomInt(1, 100)
 
-	_, err := testQueries.UpdateSmsTemplate(context.Background(), UpdateSmsTemplateParams{
+	_, err := testQueries.UpdateSmsTemplate(context.Background(), db.UpdateSmsTemplateParams{
 		Name: sql.NullString{
 			String: newName,
 			Valid:  true,

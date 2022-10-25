@@ -1,7 +1,8 @@
-package db
+package test
 
 import (
 	"database/sql"
+	"github.com/yemrealtanay/sms_templates/db/sqlc"
 	"github.com/yemrealtanay/sms_templates/util"
 	"log"
 	"os"
@@ -10,7 +11,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-var testQueries *Queries
+var testQueries *db.Queries
 var testDB *sql.DB
 
 func TestMain(m *testing.M) {
@@ -20,7 +21,7 @@ func TestMain(m *testing.M) {
 		log.Fatal("cannot connect to database:", err)
 	}
 
-	testQueries = New(testDB)
+	testQueries = db.New(testDB)
 
 	os.Exit(m.Run())
 }

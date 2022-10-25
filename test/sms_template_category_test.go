@@ -1,17 +1,18 @@
-package db
+package test
 
 import (
 	"context"
 	"database/sql"
 	"github.com/stretchr/testify/require"
 	"github.com/yemrealtanay/sms_templates/db/models"
+	"github.com/yemrealtanay/sms_templates/db/sqlc"
 	"github.com/yemrealtanay/sms_templates/util"
 	"testing"
 )
 
 func createRandomCategory(t *testing.T) models.SmsTemplateCategory {
 
-	arg := CreateSmsTemplateCategoryParams{
+	arg := db.CreateSmsTemplateCategoryParams{
 		CompanyID: sql.NullInt32{
 			Int32: util.RandomInt(1, 500),
 			Valid: true,

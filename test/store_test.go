@@ -1,15 +1,16 @@
-package db
+package test
 
 import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/yemrealtanay/sms_templates/db/sqlc"
 	"github.com/yemrealtanay/sms_templates/util"
 	"testing"
 )
 
 func TestSmsTemplateTx(t *testing.T) {
-	store := NewStore(testDB)
+	store := db.NewStore(testDB)
 
 	smsTemplateCategory := createRandomCategory(t)
 	smsTemplateType := createRandomType(t)
@@ -18,11 +19,11 @@ func TestSmsTemplateTx(t *testing.T) {
 	n := 5
 
 	errs := make(chan error)
-	results := make(chan CreateSmsTemplateTxResult)
+	results := make(chan db.CreateSmsTemplateTxResult)
 
 	for i := 0; i < n; i++ {
 		go func() {
-			result, err := store.CreateSmsTemplateTx(context.Background(), CreateSmsTemplateParams{
+			result, err := store.CreateSmsTemplateTx(context.Background(), db.CreateSmsTemplateParams{
 				CompanyID: sql.NullInt32{
 					Int32: util.RandomInt(1, 500),
 					Valid: true,
