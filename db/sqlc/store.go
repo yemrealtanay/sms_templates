@@ -8,9 +8,9 @@ import (
 )
 
 type Store interface {
-	//Querier
-	CreateSmsTemplate(ctx context.Context, arg CreateSmsTemplateParams) (CreateSmsTemplateTxResult, error)
+	//CreateSmsTemplate(ctx context.Context, arg CreateSmsTemplateParams) (CreateSmsTemplateTxResult, error)
 	UpdateSmsTemplateTx(ctx context.Context, arg UpdateSmsTemplateParams) (UpdateSmsTemplateTxResult, error)
+	CreateSmsTemplate(ctx context.Context, arg CreateSmsTemplateParams) (models.SmsTemplate, error)
 }
 
 type SQLStore struct {
@@ -18,7 +18,7 @@ type SQLStore struct {
 	*Queries
 }
 
-func NewStore(db *sql.DB) *SQLStore {
+func NewStore(db *sql.DB) Store {
 	return &SQLStore{
 		db:      db,
 		Queries: New(db),
